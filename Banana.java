@@ -1,6 +1,6 @@
 public class Banana {
 
-    private int _tosses = 0;
+    private int tosses = 0;
 
     public Banana() {
 	

@@ -1,22 +1,20 @@
-import java.util.*;
-
 public class Monkey {
 
-    private static int _monkeyNum = 0;
+    private static int monkeyNum = 0;
 
-    private int _thisMonkeyNum = 0;
+    private int thisMonkeyNum = 0;
 
-    private int _id = -1;
+    private int id = -1;
 
-    private Banana _b = null;
+    private Banana banana = null;
 
     /**
-     * Get this monkey's number
+     * Get this monkey's number.
      * @return int monkey number
      */
 
     public int getMonkeyNum() {
-	return _thisMonkeyNum;
+	return thisMonkeyNum;
     }
 
     /**
@@ -25,10 +23,10 @@ public class Monkey {
      */
 
     public int getId() throws NoIdException {
-	if (_id < 0) {
+	if (id < 0) {
 	    throw new NoIdException();
 	} else {
-	    return _id;
+	    return id;
 	}
     }
 
@@ -38,39 +36,39 @@ public class Monkey {
      */
 
     public int nextMonkey() {
-	if (_thisMonkeyNum % 2 == 0) {
-	    return _thisMonkeyNum / 2;
+	if (thisMonkeyNum % 2 == 0) {
+	    return thisMonkeyNum / 2;
 	} else {
-	    return (_thisMonkeyNum * 3) + 1;
+	    return (thisMonkeyNum * 3) + 1;
 	}
     }
 
     /**
-     * Checks to see if this monkey has a banana
+     * Checks to see if this monkey has a banana.
      * @return true if has banana, false otherwise
      */
 
     public boolean hasBanana() {
-	return _b != null;
+	return banana != null;
     }
 
     /**
-     * Receive a banana from another monkey
-     * @param b - Banana given to this monkey
+     * Receive a banana from another monkey.
+     * @param b1 - Banana given to this monkey
      */
 
-    public void throwBananaTo(Banana b) {
-	_b = b;
+    public void throwBananaTo(Banana b1) {
+	banana = b1;
     }
 
     /**
-     *
+     * Throw a banana from this monkey.
      * @return Banana - the banana this monkey held
      */
 
     public Banana throwBananaFrom() {
-	Banana toReturn = _b;
-	_b = null;
+	Banana toReturn = banana;
+	banana = null;
 	return toReturn;
     }
 
@@ -80,22 +78,22 @@ public class Monkey {
      * always return the correct value for
      * a given n (i.e., the id for the first
      * monkey should always be the same).
-     * @param int n - monkey number
-     * @return int - id for this monkey
+     * @param num Monkey number
+     * @return int ID for this monkey
      */
 
-     public int generateId(int n) {
-       return n + 223492;
-     }
+    public int generateId(int num) {
+      return num + 223492;
+    }
 
     /**
-     * Monkey constructor
+     * Monkey constructor.
      */
 
     public Monkey() {
-	_thisMonkeyNum = _monkeyNum;
-	_monkeyNum++;
-	_id = generateId(_thisMonkeyNum);
+	thisMonkeyNum = monkeyNum;
+	monkeyNum++;
+	id = generateId(thisMonkeyNum);
     }
 
 }
