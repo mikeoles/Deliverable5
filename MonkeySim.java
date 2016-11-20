@@ -55,8 +55,8 @@ public class MonkeySim {
 
     public static Monkey getFirstMonkey(List<Monkey> ml) {
      	int listSize = ml.size();
-     	for (int i=0; i < listSize; i++) {
-			if(ml.get(i).getMonkeyNum() == 1) {
+     	for (int i = 0; i < listSize; i++) {
+			if (ml.get(i).getMonkeyNum() == 1) {
 				return ml.get(i);
 			}
 		}
@@ -93,7 +93,7 @@ public class MonkeySim {
      */
 
     public static int monkeyWithBanana(List<Monkey> ml) {
-	for (int j=0; j < ml.size(); j++) {
+	for (int j = 0; j < ml.size(); j++) {
 	    Monkey monkey = ml.get(j);
 	    if (monkey.hasBanana()) {
 		int cnt = 0;
@@ -123,7 +123,7 @@ public class MonkeySim {
 	return ml.size();
     }
 	
-	/**
+    /**
      * Advances to next monkey in List of monkeys.
      * @param monkey Current monkey
      * @return int location of next monkey
