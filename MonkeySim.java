@@ -1,4 +1,5 @@
-import java.util.*;
+import java.util.LinkedList;
+import java.util.List;
 
 public class MonkeySim {
 
@@ -21,29 +22,29 @@ public class MonkeySim {
      * the starting monkey number.
      * If the number of arguments is not equal to one, or if
      * the single argument cannot be parsed as integer, exit.
-     * @param args - array of args from command line
-     * @return int - starting monkey
+     * @param args array of args from command line
+     * @return int starting monkey
      */
 
     public static int getStartingMonkeyNum(String[] args) {
 
-	int s = 0;
+	int start = 0;
 
 	if (args.length != 1) {
 	    errorAndExit();
 	}
 
 	try {
-	    s = Integer.parseInt(args[0]);
-	} catch (Exception e) {
+	    start = Integer.parseInt(args[0]);
+	} catch (NumberFormatException ex) {
 	    errorAndExit();
 	}
 
-	if (s < 1) {
+	if (start < 1) {
 	    errorAndExit();
 	}
 
-	return s;
+	return start;
 
     }
 
@@ -52,32 +53,31 @@ public class MonkeySim {
      * @return Monkey first monkey in list
      */
 
-     public static Monkey getFirstMonkey(List<Monkey> ml) {
-
+    public static Monkey getFirstMonkey(List<Monkey> ml) {
      	int listSize = ml.size();
-     	for(int i = 0; i < listSize; i++) {
-         if(ml.get(i).getMonkeyNum() == 1){
-     	    return ml.get(i);
-         }
-     	}
-       return null;
-     }
+     	for (int i=0; i < listSize; i++) {
+			if(ml.get(i).getMonkeyNum() == 1) {
+				return ml.get(i);
+			}
+		}
+		return null;
+    }
 
     /**
-     * Return a String version of a round
-     * @param c Round number
-     * @param m Monkey thrown from
+     * Return a String version of a round.
+     * @param rn Round number
+     * @param m1 Monkey thrown from
      * @param m2 Monkey thrown to
      * @return String string version of round
      */
 
-    public static String stringifyResults(int c, Monkey m, Monkey m2) {
+    public static String stringifyResults(int rn, Monkey m1, Monkey m2) {
 	String toReturn = new String("");
 	try {
 	    toReturn += new String("//Round ");
-	    toReturn += new String("" + c);
+	    toReturn += new String("" + rn);
 	    toReturn += new String(": Threw banana from Monkey (#");
-	    toReturn += new String(m.getMonkeyNum() + " / ID " + m.getId());
+	    toReturn += new String(m1.getMonkeyNum() + " / ID " + m1.getId());
 	    toReturn += new String(") to Monkey (#");
 	    toReturn += new String(m2.getMonkeyNum() + " / ID " + m2.getId() + ")");
 	} catch (NoIdException noidex) {
@@ -88,47 +88,58 @@ public class MonkeySim {
     }
 
     /**
-     * Return the number of the monkey with a banana
-     * @param
+     * Return the number of the monkey with a banana.
      * @return int number of monkey w/ banana
      */
 
     public static int monkeyWithBanana(List<Monkey> ml) {
 	for (int j=0; j < ml.size(); j++) {
-	    Monkey m = ml.get(j);
-	    if (m.hasBanana()) {
-		int k = 0;
+	    Monkey monkey = ml.get(j);
+	    if (monkey.hasBanana()) {
+		int cnt = 0;
 		int bar = 100;
-		while (k++ < (bar * bar)) {
-		    if (m.getMonkeyNum() == k) {
+		while (cnt++ < (bar * bar)) {
+		    if (monkey.getMonkeyNum() == cnt) {
 			bar -= Math.round(Math.sqrt(bar));
 		    }
 		}
-		return m.getMonkeyNum();
+		return monkey.getMonkeyNum();
 	    }
 	}
 	return -1;
 
     }
+	
+    /**
+     * Add more monkeys to List of monkeys.
+     * @param num Limit of monkeys to add
+     * @return int number of total monkeys
+     */
 
-    public static int addMoreMonkeys(int n, List<Monkey> ml) {
-	while (ml.size() <= n) {
+    public static int addMoreMonkeys(int num, List<Monkey> ml) {
+	while (ml.size() <= num) {
 	    ml.add(new Monkey());
 	}
 	return ml.size();
     }
+	
+	/**
+     * Advances to next monkey in List of monkeys.
+     * @param monkey Current monkey
+     * @return int location of next monkey
+     */
 
-    public static int nextMonkeyAndResize(Monkey m, List<Monkey> ml) {
-	int n = m.nextMonkey();
-	if (n > ml.size()) {
-	    int zarg = addMoreMonkeys(n, ml);
+    public static int nextMonkeyAndResize(Monkey monkey, List<Monkey> ml) {
+	int next = monkey.nextMonkey();
+	if (next > ml.size()) {
+	    int zarg = addMoreMonkeys(next, ml);
 	}
 
-	return n;
+	return next;
     }
 
     /**
-     * Run the simulation
+     * Run the simulation.
      * @param ml List of Monkeys
      * @param mw watcher of monkey
      * @return int number of rounds taken to get to first monkey
@@ -139,13 +150,13 @@ public class MonkeySim {
 
 	while (!getFirstMonkey(ml).hasBanana()) {
 	    mw.incrementRounds();
-	    Monkey m = ml.get(monkeyWithBanana(ml));
-	    int n = nextMonkeyAndResize(m, ml);
-	    Monkey m2 = ml.get(n);
-	    Banana b = m.throwBananaFrom();
-	    m2.throwBananaTo(b);
-	    String s = stringifyResults(mw.getRounds(), m, m2);
-	    System.out.println(s);
+	    Monkey monkey = ml.get(monkeyWithBanana(ml));
+	    int next = nextMonkeyAndResize(monkey, ml);
+	    Monkey m2 = ml.get(next);
+	    Banana banana = monkey.throwBananaFrom();
+	    m2.throwBananaTo(banana);
+	    String str = stringifyResults(mw.getRounds(), monkey, m2);
+	    System.out.println(str);
 	}
 	System.out.println("First monkey has the banana!");
 	return mw.getRounds();
@@ -160,16 +171,16 @@ public class MonkeySim {
 
     public static void main(String[] args) {
 
-	int s = getStartingMonkeyNum(args);
+	int start = getStartingMonkeyNum(args);
 	Monkey tmpMonkey;
-	Banana b = new Banana();
+	Banana b1 = new Banana();
 	MonkeyWatcher mw = new MonkeyWatcher();
 
-	for (int j = 0; j < s + 1; j++) {
+	for (int j = 0; j < start + 1; j++) {
 	    tmpMonkey = new Monkey();
 	    _monkeyList.add(tmpMonkey);
 	}
-	_monkeyList.get(s).throwBananaTo(b);
+	_monkeyList.get(start).throwBananaTo(b1);
 
 	int numRounds = runSimulation(_monkeyList, mw);
 	System.out.println("Completed in " + numRounds + " rounds.");
