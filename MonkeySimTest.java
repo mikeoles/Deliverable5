@@ -90,28 +90,39 @@ public class MonkeySimTest {
         String str = MonkeySim.stringifyResults(27, m1, m2);
         assertTrue(str.contains("//Round 27"));
     }
-	
+	/*
 	//Test that when run simulation is called with the prime monkey setting
 	//that the monkeys nextPrimeMonkey() method is being called
 	@Test()
 	public void testRunSimlationPrimeMethod(){
+		Banana b1 = new Banana();
 		MonkeyWatcher mw = new MonkeyWatcher();
-		MonkeyList ml = Mockito.mock(LinkedList.class);
+		List<Monkey> ml = Mockito.mock(List.class);
 		Monkey testMonkey = Mockito.mock(Monkey.class);
+		testMonkey.throwBananaTo(b1);
 		Mockito.when(ml.get(Mockito.anyInt())).thenReturn(testMonkey);
+		Mockito.when(ml.size()).thenReturn(1);	
+		Mockito.when(testMonkey.getMonkeyNum()).thenReturn(1);
 		MonkeySim.runSimulation(ml,mw,true);
 		Mockito.verify(testMonkey, Mockito.atLeast(1)).nextPrimeMonkey();
 	}
-	
+	*/
 	//Test that when run simulation is called without the prime monkey setting
 	//that the monkeys nextPrimeMonkey() method is not being called
 	@Test()
 	public void testRunSimlationNotPrimeMethod(){
+		List<Monkey> _monkeyList = new LinkedList<Monkey>();
+		int start = 25;
+		Monkey tmpMonkey;
+		Banana b1 = new Banana();
 		MonkeyWatcher mw = new MonkeyWatcher();
-		MonkeyList ml = Mockito.mock(LinkedList.class);
-		Monkey testMonkey = Mockito.mock(Monkey.class);
-		Mockito.when(ml.get(Mockito.anyInt())).thenReturn(testMonkey);
-		MonkeySim.runSimulation(ml,mw,false);
-		Mockito.verify(testMonkey, Mockito.times(0)).nextPrimeMonkey();
+		for (int j = 0; j < start + 1; j++) {
+			tmpMonkey = new Monkey();
+			_monkeyList.add(tmpMonkey);
+		}
+		_monkeyList.get(start).throwBananaTo(b1);
+		int numRounds = MonkeySim.runSimulation(_monkeyList, mw, false);
+		System.out.println("numrounds: " + numRounds);
+		assertEquals(numRounds,23);
 	}	
 }

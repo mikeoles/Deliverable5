@@ -3,8 +3,6 @@ import java.util.List;
 
 public class MonkeySim {
 
-    private static List<Monkey> _monkeyList = new LinkedList<Monkey>();
-
     /**
      * Print out use message and exit with
      * error code 1.
@@ -148,7 +146,7 @@ public class MonkeySim {
 
     public static int runSimulation(List<Monkey> ml, MonkeyWatcher mw, boolean isPrimeSim) {
 	int nextMonkey = -1;
-	
+		
 	while (!getFirstMonkey(ml).hasBanana()) {
 	    int next;
 		mw.incrementRounds();
@@ -177,6 +175,8 @@ public class MonkeySim {
 
     public static void main(String[] args) {
 
+	List<Monkey> _monkeyList = new LinkedList<Monkey>();
+	
 	int start = getStartingMonkeyNum(args);
 	Monkey tmpMonkey;
 	Banana b1 = new Banana();
