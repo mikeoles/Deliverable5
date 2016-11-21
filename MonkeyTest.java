@@ -103,5 +103,18 @@ public class MonkeyTest {
 		testMonkey.setMonkeyNum(2);
 		int nextMonkeyNum = testMonkey.nextPrimeMonkey();
 		assertEquals(nextMonkeyNum,1);
+	}	
+
+	//Test that when a negative number is thrown in an exception occurs
+	@Test
+	public void testNextPrimeMonkeyNegative(){
+		try{
+			Monkey testMonkey = new Monkey();
+			testMonkey.setMonkeyNum(-1);
+			int nextMonkeyNum = testMonkey.nextPrimeMonkey();
+			fail();
+		} catch (IllegalArgumentException iae) {
+			// expected behavior
+		}
 	}		
 }

@@ -59,7 +59,7 @@ public class Monkey {
      *
      * @return int which monkey should get banana.
      */
-    public int nextPrimeMonkey() {
+    public int nextPrimeMonkey(){
 		//Monkey 2 (the lowest prime) passes to monkey 1
 		if(thisMonkeyNum == 2){
 			return 1;
@@ -71,7 +71,7 @@ public class Monkey {
 				return i;
 			}
 		}
-		return -1;
+		throw new IllegalArgumentException("No primes found");
     }	
 
     /**
