@@ -19,6 +19,15 @@ public class Monkey {
     }
 
     /**
+     * Setter for id.
+     *
+     * @param id of monkey
+     */	
+	public void setMonkeyNum(int thisMonkeyNum) {
+		this.thisMonkeyNum = thisMonkeyNum;
+	}
+	
+    /**
      * Getter for id.
      *
      * @return id of monkey
@@ -46,6 +55,7 @@ public class Monkey {
 	
     /**
      * Return which monkey should get banana next.
+	 * Finds monkey with the next lowest prime number. 
      *
      * @return int which monkey should get banana.
      */
@@ -118,17 +128,19 @@ public class Monkey {
      * @param int checks if this number is prime
      * @return boolean true if number is prime
      */
-    private boolean isPrime(int n) {
+    public boolean isPrime(int n) {
+		//numbers less than 2 are not prime
+		if(n < 2){
+			return false;
+		}
 		//check if n is 2
 		if(n == 2){
 			return true;
 		}
-		
         //check if n is a multiple of 2
         if (n%2==0) {
 			return false;
 		}
-		
         //if not, then just check the odds
         for(int i=3;i*i<=n;i+=2) {
             if(n%i==0) {

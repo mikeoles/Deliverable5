@@ -139,18 +139,6 @@ public class MonkeySim {
 	}
 
     /**
-     * Advances to next monkey in List of monkeys.
-     * @param monkey Current monkey
-     * @return int location of next monkey
-     */
-
-    public static int nextPrimeMonkey(Monkey monkey, List<Monkey> ml) {
-	int next = monkey.nextPrimeMonkey();	
-
-	return next;
-    }
-
-    /**
      * Run the simulation.
      * @param ml List of Monkeys
      * @param mw watcher of monkey
@@ -166,7 +154,7 @@ public class MonkeySim {
 		mw.incrementRounds();
 	    Monkey monkey = ml.get(monkeyWithBanana(ml));
 		if(isPrimeSim){
-		    next = nextPrimeMonkey(monkey, ml);
+		    next = monkey.nextPrimeMonkey();
 	    }else{
 	        next = nextMonkeyAndResize(monkey, ml);			
 		}
@@ -207,6 +195,7 @@ public class MonkeySim {
 	MonkeyWatcher mwPrime = new MonkeyWatcher();
 	
 	System.out.println("\nStarting Again...");
+	//Get rid of the banana that the first monkey has from the previous game
 	getFirstMonkey(_monkeyList).throwBananaFrom();
 	_monkeyList.get(start).throwBananaTo(b1);
 	
