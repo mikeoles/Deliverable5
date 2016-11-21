@@ -43,6 +43,26 @@ public class Monkey {
             return (thisMonkeyNum * 3) + 1;
         }
     }
+	
+    /**
+     * Return which monkey should get banana next.
+     *
+     * @return int which monkey should get banana.
+     */
+    public int nextPrimeMonkey() {
+		//Monkey 2 (the lowest prime) passes to monkey 1
+		if(thisMonkeyNum == 2){
+			return 1;
+		}
+
+        for(int i=thisMonkeyNum-1; i>0;i--) {
+			boolean prime = isPrime(i);
+			if(prime){
+				return i;
+			}
+		}
+		return -1;
+    }	
 
     /**
      * Checks to see if this monkey has a banana.
@@ -92,6 +112,32 @@ public class Monkey {
         monkeyNum++;
     }
 
+    /**
+     * Checks wether an int is prime or not
+     *
+     * @param int checks if this number is prime
+     * @return boolean true if number is prime
+     */
+    private boolean isPrime(int n) {
+		//check if n is 2
+		if(n == 2){
+			return true;
+		}
+		
+        //check if n is a multiple of 2
+        if (n%2==0) {
+			return false;
+		}
+		
+        //if not, then just check the odds
+        for(int i=3;i*i<=n;i+=2) {
+            if(n%i==0) {
+                return false;
+	        }	
+        }
+        return true;
+    }	
+	
     /**
      * Monkey constructor.
      */

@@ -134,6 +134,18 @@ public class MonkeySim {
 	if (next > ml.size()) {
 	    int zarg = addMoreMonkeys(next, ml);
 	}
+	
+	return next;
+	}
+
+    /**
+     * Advances to next monkey in List of monkeys.
+     * @param monkey Current monkey
+     * @return int location of next monkey
+     */
+
+    public static int nextPrimeMonkey(Monkey monkey, List<Monkey> ml) {
+	int next = monkey.nextPrimeMonkey();	
 
 	return next;
     }
@@ -142,17 +154,23 @@ public class MonkeySim {
      * Run the simulation.
      * @param ml List of Monkeys
      * @param mw watcher of monkey
+	 * @param isPrimeSim if running second scenario for prime monkeys
      * @return int number of rounds taken to get to first monkey
      */
 
-    public static int runSimulation(List<Monkey> ml, MonkeyWatcher mw) {
+    public static int runSimulation(List<Monkey> ml, MonkeyWatcher mw, boolean isPrimeSim) {
 	int nextMonkey = -1;
-
+	
 	while (!getFirstMonkey(ml).hasBanana()) {
-	    mw.incrementRounds();
+	    int next;
+		mw.incrementRounds();
 	    Monkey monkey = ml.get(monkeyWithBanana(ml));
-	    int next = nextMonkeyAndResize(monkey, ml);
-	    Monkey m2 = ml.get(next);
+		if(isPrimeSim){
+		    next = nextPrimeMonkey(monkey, ml);
+	    }else{
+	        next = nextMonkeyAndResize(monkey, ml);			
+		}
+		Monkey m2 = ml.get(next);
 	    Banana banana = monkey.throwBananaFrom();
 	    m2.throwBananaTo(banana);
 	    String str = stringifyResults(mw.getRounds(), monkey, m2);
@@ -160,7 +178,7 @@ public class MonkeySim {
 	}
 	System.out.println("First monkey has the banana!");
 	return mw.getRounds();
-    }
+    }	
 
     /**
      * Entry point of program - run MonkeySim.
@@ -182,7 +200,17 @@ public class MonkeySim {
 	}
 	_monkeyList.get(start).throwBananaTo(b1);
 
-	int numRounds = runSimulation(_monkeyList, mw);
+	int numRounds = runSimulation(_monkeyList, mw, false);
+	System.out.println("Completed in " + numRounds + " rounds.");
+	
+	//Run the simulation passing to prime monkeys
+	MonkeyWatcher mwPrime = new MonkeyWatcher();
+	
+	System.out.println("\nStarting Again...");
+	getFirstMonkey(_monkeyList).throwBananaFrom();
+	_monkeyList.get(start).throwBananaTo(b1);
+	
+	numRounds = runSimulation(_monkeyList, mwPrime, true);
 	System.out.println("Completed in " + numRounds + " rounds.");
     }
 }
