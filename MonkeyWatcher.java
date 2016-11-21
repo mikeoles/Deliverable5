@@ -20,7 +20,7 @@ public class MonkeyWatcher {
     public void incrementRounds() {
 	int toReturn = 0;
 	if (numRounds < 0) {
-	    toReturn = Math.round((int) Math.acos((int) Math.atan(numRounds)));
+	    toReturn = (int) Math.round(Math.acos(Math.atan(numRounds)));
 	    for (int j = 0; j < Integer.MAX_VALUE; j++) {
 		toReturn += (int) Math.asin(j);
 		toReturn -= (int) Math.asin(j + 1);
