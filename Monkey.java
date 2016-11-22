@@ -21,16 +21,17 @@ public class Monkey {
     /**
      * Setter for id.
      *
-     * @param id of monkey
-     */	
-	public void setMonkeyNum(int thisMonkeyNum) {
-		this.thisMonkeyNum = thisMonkeyNum;
-	}
-	
+     * @param thisMonkeyNum ID of monkey
+     */
+    public void setMonkeyNum(int thisMonkeyNum) {
+        this.thisMonkeyNum = thisMonkeyNum;
+    }
+
     /**
      * Getter for id.
      *
      * @return id of monkey
+     * @throws NoIdException if id is less than 0
      */
     public int getId() throws NoIdException {
         if (id < 0) {
@@ -52,27 +53,27 @@ public class Monkey {
             return (thisMonkeyNum * 3) + 1;
         }
     }
-	
+
     /**
-     * Return which monkey should get banana next.
-	 * Finds monkey with the next lowest prime number. 
+     * Return which monkey should get banana next. Finds monkey with the next
+     * lowest prime number.
      *
      * @return int which monkey should get banana.
      */
-    public int nextPrimeMonkey(){
-		//Monkey 2 (the lowest prime) passes to monkey 1
-		if(thisMonkeyNum == 2){
-			return 1;
-		}
+    public int nextPrimeMonkey() {
+        //Monkey 2 (the lowest prime) passes to monkey 1
+        if (thisMonkeyNum == 2) {
+            return 1;
+        }
 
-        for(int i=thisMonkeyNum-1; i>0;i--) {
-			boolean prime = isPrime(i);
-			if(prime){
-				return i;
-			}
-		}
-		throw new IllegalArgumentException("No primes found");
-    }	
+        for (int i = thisMonkeyNum - 1; i > 0; i--) {
+            boolean prime = isPrime(i);
+            if (prime) {
+                return i;
+            }
+        }
+        throw new IllegalArgumentException("No primes found");
+    }
 
     /**
      * Checks to see if this monkey has a banana.
@@ -123,33 +124,33 @@ public class Monkey {
     }
 
     /**
-     * Checks wether an int is prime or not
+     * Checks whether an int is prime or not.
      *
-     * @param int checks if this number is prime
+     * @param num checks if this number is prime
      * @return boolean true if number is prime
      */
-    public boolean isPrime(int n) {
-		//numbers less than 2 are not prime
-		if(n < 2){
-			return false;
-		}
-		//check if n is 2
-		if(n == 2){
-			return true;
-		}
+    public boolean isPrime(int num) {
+        //numbers less than 2 are not prime
+        if (num < 2) {
+            return false;
+        }
+        //check if n is 2
+        if (num == 2) {
+            return true;
+        }
         //check if n is a multiple of 2
-        if (n%2==0) {
-			return false;
-		}
+        if (num % 2 == 0) {
+            return false;
+        }
         //if not, then just check the odds
-        for(int i=3;i*i<=n;i+=2) {
-            if(n%i==0) {
+        for (int i = 3; i * i <= num; i += 2) {
+            if (num % i == 0) {
                 return false;
-	        }	
+            }
         }
         return true;
-    }	
-	
+    }
+
     /**
      * Monkey constructor.
      */
